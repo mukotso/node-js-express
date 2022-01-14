@@ -11,21 +11,16 @@ const port = 3000;
 let books = [];
 
 app.use(cors());
-
-// Configuring body parser middleware
-
-
-
 //create a book
 app.post('/create-book', (req, res,next) => {
     const book = req.body;
-    console.log(book);
     books.push(book);
     res.send('Book added to database successfully');
 });
 
 //fetch all books
 app.get('/books', (req, res) => {
+    //return a json response
     res.json(books);
 });
 
@@ -34,7 +29,6 @@ app.get('/books', (req, res) => {
 app.get('/book/:isbn', (req, res) => {
     // Reading isbn from the URL
     const isbn = req.params.isbn;
-
     // Searching books for the isbn
     for (let book of books) {
         if (book.isbn == isbn) {
@@ -42,9 +36,8 @@ app.get('/book/:isbn', (req, res) => {
             return;
         }
     }
-
     // Sending 404 when not found something is a good practice
-    res.status(404).send('Book not found');
+    res.sendStatus(404);
 });
 
 //delete
@@ -60,20 +53,25 @@ app.get('/book/delete/:isbn', (req, res) => {
             return;
         }
     }
-
     // Sending 404 when not found something is a good practice
     res.send("Book not found");
 });
 
 //update
 app.put('/book/update-details/:isbn',(req, res) => {
+    //get isbn from url parameters
     const isbn = req.params.isbn;
+    //the request
     const newBookDetails = req.body;
+    //original book details
     let oldBook = books.find((book) => book.isbn == req.params.isbn);
+    //mapping
     books = books.map((book) => {
+        //if you find the book update
         if (book.isbn == isbn){
             return newBookDetails;
         }
+        //else 
         return oldBook;
     });
 

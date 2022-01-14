@@ -9,10 +9,10 @@ const port = 8000;
 const requestListener = function (req, res) {
 //sets HTTP status code of the response  
   res.writeHead(200);
-    res.end("My first server!");
+    res.end("Hello World!");
 };
 
-//create hhtp server
+//create http server
 //accepts requests and passes them to the request listener
 const server = http.createServer(requestListener);
 // bind server to a network address
