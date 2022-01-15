@@ -44,18 +44,13 @@ app.get('/book/:isbn', (req, res) => {
 app.get('/book/delete/:isbn', (req, res) => {
     // Reading isbn from the URL
     const isbn = req.params.isbn;
+    let book = books.find((book) => book.isbn == req.params.isbn);
+    books.pop(book);
+     res.sendStatus(200);
 
-    // Searching books for the isbn
-    for (let book of books) {
-        if (book.isbn == isbn) {
-            books.pop(book);
-            res.json('Book deleted');
-            return;
-        }
-    }
-    // Sending 404 when not found something is a good practice
-    res.send("Book not found");
-});
+    });
+     
+    
 
 //update
 app.put('/book/update-details/:isbn',(req, res) => {
